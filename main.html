@@ -1,802 +1,613 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>SURYA-X Sessions | Ultra Pro Max</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    :root {
-      --neon-cyan: #00ffcc;
-      --neon-pink: #ff2e63;
-      --neon-purple: #7209b7;
-      --neon-blue: #4361ee;
-      --dark-bg: #0a0a0a;
-      --card-bg: rgba(15, 15, 25, 0.8);
-    }
-
-    body {
-      font-family: 'Montserrat', sans-serif;
-      background: var(--dark-bg);
-      color: var(--neon-cyan);
-      min-height: 100vh;
-      position: relative;
-      overflow-x: hidden;
-    }
-
-    /* Advanced Particle Background */
-    #particles-js {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      z-index: -2;
-      background: radial-gradient(ellipse at center, #0a0a1a 0%, #000000 100%);
-    }
-
-    /* Animated Grid Overlay */
-    .cyber-grid {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      background: 
-        linear-gradient(rgba(0, 255, 204, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 255, 204, 0.03) 1px, transparent 1px);
-      background-size: 50px 50px;
-      animation: gridMove 40s linear infinite;
-      opacity: 0.5;
-    }
-
-    @keyframes gridMove {
-      0% { transform: translate(0, 0); }
-      100% { transform: translate(-50px, -50px); }
-    }
-
-    /* 3D Profile Section */
-    .profile-section {
-      display: flex;
-      justify-content: center;
-      margin: 20px 0 40px;
-      position: relative;
-      z-index: 10;
-      perspective: 1000px;
-    }
-
-    .profile-container {
-      width: 200px;
-      height: 200px;
-      position: relative;
-      transform-style: preserve-3d;
-      animation: float3d 6s ease-in-out infinite;
-    }
-
-    .profile-image {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      object-fit: cover;
-      position: absolute;
-      box-shadow: 
-        0 0 30px var(--neon-cyan),
-        inset 0 0 30px rgba(0, 255, 204, 0.3);
-      border: 3px solid var(--neon-cyan);
-      transform: translateZ(20px);
-      animation: rotate3d 20s linear infinite;
-    }
-
-    .profile-border {
-      position: absolute;
-      width: 110%;
-      height: 110%;
-      top: -5%;
-      left: -5%;
-      border-radius: 50%;
-      background: conic-gradient(
-        from 0deg,
-        var(--neon-pink),
-        var(--neon-purple),
-        var(--neon-blue),
-        var(--neon-cyan),
-        var(--neon-pink)
-      );
-      animation: rotate 4s linear infinite;
-      box-shadow: 0 0 40px rgba(255, 46, 99, 0.5);
-    }
-
-    .profile-border::before {
-      content: '';
-      position: absolute;
-      width: 94%;
-      height: 94%;
-      top: 3%;
-      left: 3%;
-      background: var(--dark-bg);
-      border-radius: 50%;
-      z-index: -1;
-    }
-
-    @keyframes float3d {
-      0%, 100% { transform: translateY(0) rotateX(5deg) rotateY(5deg); }
-      50% { transform: translateY(-20px) rotateX(-5deg) rotateY(-5deg); }
-    }
-
-    @keyframes rotate3d {
-      0% { transform: translateZ(20px) rotateY(0deg); }
-      100% { transform: translateZ(20px) rotateY(360deg); }
-    }
-
-    /* Container */
-    .container {
-      max-width: 1300px;
-      margin: 0 auto;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 50px;
-      position: relative;
-      z-index: 1;
-      margin-top: 80px;
-    }
-
-    /* Enhanced News Ticker */
-    .news-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1000;
-      font-family: 'Orbitron', sans-serif;
-      background: rgba(10, 10, 20, 0.9);
-      backdrop-filter: blur(10px);
-      border-bottom: 2px solid var(--neon-cyan);
-      box-shadow: 0 5px 30px rgba(0, 255, 204, 0.3);
-    }
-
-    .news-container .title {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 40%;
-      background: linear-gradient(90deg, var(--neon-pink), var(--neon-purple));
-      padding: 12px 24px;
-      color: #fff;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      text-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
-      z-index: 1001;
-      font-size: 1.1rem;
-      box-shadow: 0 0 20px rgba(255, 46, 99, 0.5);
-    }
-
-    .news-container .ticker {
-      width: 100%;
-      overflow: hidden;
-      margin-left: 40%;
-    }
-
-    .news-container ul {
-      display: flex;
-      list-style: none;
-      margin: 0;
-      padding: 12px 0;
-      animation: scroll 25s infinite linear;
-    }
-
-    .news-container ul li {
-      white-space: nowrap;
-      padding: 0 30px;
-      color: var(--neon-cyan);
-      font-size: 1.1rem;
-      font-weight: 600;
-      text-shadow: 0 0 10px var(--neon-cyan);
-      position: relative;
-    }
-
-    .news-container ul li::after {
-      content: "✦";
-      position: absolute;
-      top: 50%;
-      right: -5px;
-      transform: translateY(-50%);
-      color: var(--neon-pink);
-      text-shadow: 0 0 10px var(--neon-pink);
-    }
-
-    @keyframes scroll {
-      from { transform: translateX(100%); }
-      to { transform: translateX(-100%); }
-    }
-
-    /* Hero Section */
-    .hero {
-      text-align: center;
-      padding: 60px 40px;
-      background: var(--card-bg);
-      border: 2px solid var(--neon-cyan);
-      border-radius: 20px;
-      box-shadow: 
-        0 0 40px rgba(0, 255, 204, 0.4),
-        inset 0 0 40px rgba(0, 255, 204, 0.1);
-      position: relative;
-      overflow: hidden;
-      backdrop-filter: blur(10px);
-      transform-style: preserve-3d;
-      transform: translateZ(0);
-      transition: all 0.5s ease;
-    }
-
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: linear-gradient(
-        45deg,
-        transparent,
-        rgba(0, 255, 204, 0.1),
-        transparent
-      );
-      transform: rotate(45deg);
-      animation: shine 6s infinite;
-    }
-
-    .hero:hover {
-      transform: translateY(-10px) translateZ(10px);
-      box-shadow: 
-        0 15px 50px rgba(0, 255, 204, 0.6),
-        inset 0 0 50px rgba(0, 255, 204, 0.2);
-    }
-
-    .hero h1 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 3.5rem;
-      background: linear-gradient(45deg, var(--neon-pink), var(--neon-cyan));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 30px rgba(255, 46, 99, 0.5);
-      margin-bottom: 20px;
-      letter-spacing: 2px;
-      font-weight: 900;
-    }
-
-    .hero p {
-      font-size: 1.3rem;
-      color: var(--neon-cyan);
-      max-width: 700px;
-      margin: 0 auto;
-      line-height: 1.6;
-      text-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
-    }
-
-    /* Features Section */
-    .features {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 30px;
-      width: 100%;
-    }
-
-    .feature-card {
-      background: var(--card-bg);
-      border: 2px solid var(--neon-cyan);
-      border-radius: 15px;
-      padding: 30px;
-      text-align: center;
-      transition: all 0.5s ease;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      position: relative;
-      overflow: hidden;
-      backdrop-filter: blur(10px);
-      transform-style: preserve-3d;
-      transform: translateZ(0);
-    }
-
-    .feature-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(0, 255, 204, 0.1),
-        transparent
-      );
-      transition: left 0.7s ease;
-    }
-
-    .feature-card:hover::before {
-      left: 100%;
-    }
-
-    .feature-card:hover {
-      transform: translateY(-15px) translateZ(20px) rotateX(5deg);
-      box-shadow: 
-        0 20px 40px rgba(0, 255, 204, 0.4),
-        inset 0 0 30px rgba(0, 255, 204, 0.1);
-      border-color: var(--neon-pink);
-    }
-
-    .feature-card h3 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.8rem;
-      color: var(--neon-pink);
-      margin-bottom: 15px;
-      text-shadow: 0 0 15px rgba(255, 46, 99, 0.5);
-      font-weight: 700;
-    }
-
-    .feature-card p {
-      font-size: 1.1rem;
-      color: var(--neon-cyan);
-      flex-grow: 1;
-      line-height: 1.6;
-    }
-
-    .feature-card .btn {
-      width: 100%;
-      padding: 1.2em;
-      font-size: 1.1rem;
-      margin-top: auto;
-    }
-
-    /* About & Contact Sections */
-    .about, .contact {
-      background: var(--card-bg);
-      border: 2px solid var(--neon-cyan);
-      border-radius: 15px;
-      padding: 40px;
-      text-align: center;
-      width: 100%;
-      position: relative;
-      overflow: hidden;
-      backdrop-filter: blur(10px);
-      transition: all 0.5s ease;
-    }
-
-    .about:hover, .contact:hover {
-      transform: translateY(-10px);
-      box-shadow: 
-        0 15px 40px rgba(0, 255, 204, 0.4),
-        inset 0 0 40px rgba(0, 255, 204, 0.1);
-    }
-
-    .about h2, .contact h2 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 2.5rem;
-      background: linear-gradient(45deg, var(--neon-pink), var(--neon-cyan));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 20px;
-      font-weight: 800;
-    }
-
-    .about p, .contact p {
-      font-size: 1.2rem;
-      color: var(--neon-cyan);
-      max-width: 900px;
-      margin: 0 auto;
-      line-height: 1.7;
-    }
-
-    /* Buttons */
-    .btn {
-      background: transparent;
-      border: 2px solid var(--neon-cyan);
-      border-radius: 12px;
-      cursor: pointer;
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.2rem;
-      text-transform: uppercase;
-      color: var(--neon-cyan);
-      text-shadow: 0 0 10px var(--neon-cyan);
-      transition: all 0.4s ease;
-      position: relative;
-      overflow: hidden;
-      font-weight: 700;
-      letter-spacing: 1px;
-      padding: 1em 1.5em;
-    }
-
-    .btn::before, .btn::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(0, 255, 204, 0.4), transparent);
-      transition: all 0.6s ease;
-    }
-
-    .btn::after {
-      left: 100%;
-      transition-delay: 0.2s;
-    }
-
-    .btn:hover::before {
-      left: 100%;
-    }
-
-    .btn:hover::after {
-      left: -100%;
-    }
-
-    .btn:hover {
-      background: rgba(0, 255, 204, 0.15);
-      box-shadow: 
-        0 0 25px rgba(0, 255, 204, 0.7),
-        inset 0 0 15px rgba(0, 255, 204, 0.2);
-      color: #fff;
-      border-color: #fff;
-      transform: translateY(-3px);
-    }
-
-    .btn:active {
-      transform: scale(0.97);
-      filter: brightness(1.2);
-    }
-
-    /* Footer */
-    .footer {
-      margin-top: 60px;
-      padding: 30px;
-      background: var(--card-bg);
-      border: 2px solid var(--neon-cyan);
-      border-radius: 15px;
-      text-align: center;
-      color: var(--neon-cyan);
-      font-family: 'Montserrat', sans-serif;
-      font-size: 1rem;
-      text-shadow: 0 0 10px var(--neon-cyan);
-      width: 100%;
-      backdrop-filter: blur(10px);
-    }
-
-    .footer b {
-      color: var(--neon-pink);
-      text-shadow: 0 0 10px rgba(255, 46, 99, 0.5);
-    }
-
-    .footer .social-links {
-      margin-top: 25px;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 25px;
-      max-width: 400px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .footer .social-links a {
-      color: var(--neon-cyan);
-      font-size: 2rem;
-      transition: all 0.4s ease;
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      border: 2px solid var(--neon-cyan);
-      box-shadow: 0 0 15px rgba(0, 255, 204, 0.5);
-      margin: 0 auto;
-    }
-
-    .footer .social-links a:hover {
-      color: var(--neon-pink);
-      text-shadow: 0 0 15px var(--neon-pink);
-      border-color: var(--neon-pink);
-      box-shadow: 0 0 25px rgba(255, 46, 99, 0.7);
-      transform: translateY(-5px) scale(1.1);
-    }
-
-    /* Animations */
-    @keyframes shine {
-      0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-      100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-    }
-
-    /* Responsive Design */
-    @media (max-width: 1024px) {
-      .features {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      
-      .hero h1 {
-        font-size: 2.8rem;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .container {
-        padding: 15px;
-        margin-top: 100px;
-        gap: 40px;
-      }
-
-      .news-container .title {
-        width: 50%;
-        font-size: 0.9rem;
-        padding: 10px 15px;
-      }
-
-      .news-container .ticker {
-        margin-left: 50%;
-      }
-
-      .news-container ul li {
-        font-size: 0.9rem;
-        padding: 0 20px;
-      }
-
-      .hero {
-        padding: 40px 20px;
-      }
-
-      .hero h1 {
-        font-size: 2.2rem;
-      }
-
-      .hero p {
-        font-size: 1.1rem;
-      }
-
-      .features {
-        grid-template-columns: 1fr;
-        gap: 25px;
-      }
-
-      .feature-card {
-        padding: 25px;
-      }
-
-      .feature-card h3 {
-        font-size: 1.5rem;
-      }
-
-      .about, .contact {
-        padding: 30px 20px;
-      }
-
-      .about h2, .contact h2 {
-        font-size: 2rem;
-      }
-
-      .about p, .contact p {
-        font-size: 1.1rem;
-      }
-
-      .profile-container {
-        width: 160px;
-        height: 160px;
-      }
-
-      .footer .social-links {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-      }
-
-      .footer .social-links a {
-        width: 60px;
-        height: 60px;
-        font-size: 1.7rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .hero h1 {
-        font-size: 1.8rem;
-      }
-      
-      .profile-container {
-        width: 140px;
-        height: 140px;
-      }
-      
-      .btn {
-        font-size: 1rem;
-        padding: 0.9em 1.2em;
-      }
-    }
-  </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SURYA-X</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet"/>
+<script src="/socket.io/socket.io.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#010b06;--green:#00ff88;--green2:#00cc66;
+  --green-dim:#004422;--green-glow:rgba(0,255,136,0.15);
+  --red:#ff2244;--yellow:#ffcc00;--text:#b0ffcc;
+  --muted:#3a6b4a;--border:#0f3d20;
+  --font-mono:'Share Tech Mono',monospace;
+  --font-display:'Orbitron',sans-serif;
+}
+html{min-height:100%;overflow-x:hidden}
+body{
+  background:var(--black);color:var(--text);
+  font-family:var(--font-mono);
+  display:flex;flex-direction:column;align-items:center;
+  padding:20px 16px 80px;position:relative;overflow-x:hidden;
+}
+#matrix-canvas{position:fixed;inset:0;opacity:0.07;pointer-events:none;z-index:0}
+body::after{
+  content:'';position:fixed;inset:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.12) 2px,rgba(0,0,0,0.12) 4px);
+  pointer-events:none;z-index:999;
+}
+body::before{
+  content:'';position:fixed;inset:0;
+  background:radial-gradient(ellipse at center,transparent 60%,rgba(0,0,0,0.7) 100%);
+  pointer-events:none;z-index:1;
+}
+.wrapper{position:relative;z-index:10;width:100%;max-width:520px;animation:bootUp 0.8s ease both}
+@keyframes bootUp{from{opacity:0;filter:brightness(4)}to{opacity:1;filter:brightness(1)}}
+
+/* ── HEADER ── */
+.header{text-align:center;margin-bottom:22px;padding-top:12px}
+.surya-logo{
+  font-family:var(--font-display);font-weight:900;
+  font-size:clamp(32px,8vw,52px);letter-spacing:8px;
+  color:var(--green);
+  text-shadow:0 0 24px var(--green),0 0 60px var(--green2),0 0 100px rgba(0,255,136,0.3);
+  animation:logoGlitch 5s infinite;
+  display:block;line-height:1;
+}
+.surya-x{
+  color:#fff;
+  text-shadow:0 0 24px #fff,0 0 50px var(--green);
+}
+@keyframes logoGlitch{
+  0%,85%,100%{letter-spacing:8px;opacity:1}
+  87%{letter-spacing:6px;opacity:0.8;filter:hue-rotate(30deg)}
+  89%{letter-spacing:10px;opacity:1}
+  91%{letter-spacing:8px;filter:none}
+}
+.logo-tagline{
+  font-size:9px;letter-spacing:5px;color:var(--muted);
+  margin-top:6px;text-transform:uppercase;
+}
+.logo-bar{
+  width:60px;height:1px;background:linear-gradient(90deg,transparent,var(--green),transparent);
+  margin:10px auto 0;
+}
+
+/* ── TERMINAL ── */
+.terminal{
+  background:rgba(0,10,5,0.97);border:1px solid var(--green-dim);border-radius:3px;
+  box-shadow:0 0 40px rgba(0,255,136,0.07),0 0 80px rgba(0,255,136,0.03);
+  overflow:hidden;position:relative;
+}
+.terminal::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--green),transparent);animation:scanLine 4s linear infinite;
+}
+@keyframes scanLine{0%{opacity:0.2}50%{opacity:1}100%{opacity:0.2}}
+.term-bar{
+  display:flex;align-items:center;gap:8px;
+  padding:9px 14px;background:rgba(0,255,136,0.03);border-bottom:1px solid var(--border);
+}
+.term-dot{width:9px;height:9px;border-radius:50%}
+.dot-r{background:#ff5f57}.dot-y{background:#febc2e}.dot-g{background:#28c840}
+.term-title{flex:1;text-align:center;font-size:9px;color:var(--muted);letter-spacing:3px}
+.term-body{padding:18px}
+
+/* ── STATUS ── */
+.status-log{
+  display:flex;align-items:center;gap:10px;
+  margin-bottom:18px;padding:10px 14px;min-height:44px;
+  background:rgba(0,255,136,0.02);border:1px solid var(--border);border-radius:2px;
+}
+.status-dot{width:7px;height:7px;border-radius:50%;background:var(--muted);flex-shrink:0;transition:all 0.3s}
+.status-dot.info{background:var(--yellow);box-shadow:0 0 8px var(--yellow)}
+.status-dot.success{background:var(--green);box-shadow:0 0 8px var(--green)}
+.status-dot.connected{background:var(--green);box-shadow:0 0 14px var(--green);animation:pulse 0.8s infinite}
+.status-dot.error{background:var(--red);box-shadow:0 0 8px var(--red)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+.status-text{font-size:11px;color:var(--text);letter-spacing:0.5px;line-height:1.4}
+
+/* ── MODE TOGGLE ── */
+.mode-toggle{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px}
+.mode-btn{
+  padding:11px;border:1px solid var(--border);background:transparent;
+  color:var(--muted);font-family:var(--font-mono);font-size:10px;
+  letter-spacing:2px;cursor:pointer;border-radius:2px;transition:all 0.2s;
+  display:flex;flex-direction:column;align-items:center;gap:4px;text-transform:uppercase;
+}
+.mode-btn .icon{font-size:18px}
+.mode-btn:hover{border-color:var(--green);color:var(--green);background:var(--green-glow)}
+.mode-btn.active{
+  border-color:var(--green);color:var(--green);background:rgba(0,255,136,0.07);
+  box-shadow:0 0 18px rgba(0,255,136,0.12);text-shadow:0 0 8px var(--green);
+}
+
+/* ── PANELS ── */
+.panel{display:none;animation:fadeIn 0.3s ease}
+.panel.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── INPUT ── */
+.input-group{margin-bottom:13px}
+.input-label{font-size:9px;color:var(--muted);letter-spacing:3px;text-transform:uppercase;margin-bottom:6px;display:block}
+.input-wrap{position:relative}
+.input-wrap input{
+  width:100%;background:rgba(0,255,136,0.02);border:1px solid var(--border);
+  border-radius:2px;padding:11px 14px;color:var(--green);font-family:var(--font-mono);
+  font-size:14px;outline:none;letter-spacing:2px;transition:border-color 0.2s,box-shadow 0.2s;
+}
+.input-wrap input:focus{border-color:var(--green);box-shadow:0 0 0 2px rgba(0,255,136,0.08)}
+.input-wrap input::placeholder{color:var(--muted)}
+.input-prefix{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--green2);pointer-events:none}
+.input-wrap.has-prefix input{padding-left:26px}
+
+/* ── EXEC BTN ── */
+.exec-btn{
+  width:100%;padding:12px;background:transparent;border:1px solid var(--green);
+  color:var(--green);font-family:var(--font-display);font-size:10px;font-weight:700;
+  letter-spacing:4px;text-transform:uppercase;cursor:pointer;border-radius:2px;
+  transition:all 0.25s;position:relative;overflow:hidden;
+}
+.exec-btn::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent,rgba(0,255,136,0.1),transparent);
+  transform:translateX(-100%);transition:transform 0.4s;
+}
+.exec-btn:hover{background:rgba(0,255,136,0.07);box-shadow:0 0 20px rgba(0,255,136,0.18);text-shadow:0 0 10px var(--green)}
+.exec-btn:hover::before{transform:translateX(100%)}
+.exec-btn:disabled{opacity:0.3;cursor:not-allowed;border-color:var(--muted);color:var(--muted)}
+
+/* ── PAIR CODE BOX ── */
+.pair-code-box{
+  margin:16px 0;padding:16px;border:1px solid var(--green-dim);
+  border-radius:2px;text-align:center;background:rgba(0,255,136,0.02);display:none;
+}
+.pair-code-box.show{display:block;animation:fadeIn 0.5s ease}
+.pair-label{font-size:9px;letter-spacing:4px;color:var(--muted);text-transform:uppercase;margin-bottom:10px}
+.pair-code{
+  font-family:var(--font-display);font-size:clamp(20px,6vw,32px);font-weight:900;
+  color:var(--green);letter-spacing:6px;
+  text-shadow:0 0 20px var(--green),0 0 40px var(--green2);
+  animation:codeFlicker 3s ease infinite;
+}
+@keyframes codeFlicker{0%,95%,100%{opacity:1}96%{opacity:0.5}98%{opacity:0.7}}
+.pair-hint{font-size:10px;color:var(--muted);margin-top:10px;letter-spacing:0.5px;line-height:2}
+
+/* ── QR BOX ── */
+.qr-box{
+  margin:16px 0;padding:16px;border:1px solid var(--green-dim);
+  border-radius:2px;text-align:center;background:rgba(0,255,136,0.02);display:none;
+}
+.qr-box.show{display:block;animation:fadeIn 0.5s ease}
+.qr-box img{border-radius:3px;border:2px solid var(--green-dim);box-shadow:0 0 30px rgba(0,255,136,0.18);max-width:200px}
+
+/* ── SESSION OUTPUT ── */
+.session-output{margin-top:18px;display:none}
+.session-output.show{display:block;animation:fadeIn 0.5s ease}
+
+/* ── SESSION ID (SURYA-X~...) ── */
+.sid-wrap{
+  padding:14px 16px;
+  border:1px solid var(--green);
+  border-radius:2px;
+  background:rgba(0,255,136,0.04);
+  margin-bottom:14px;
+  position:relative;
+  overflow:hidden;
+}
+.sid-wrap::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:linear-gradient(180deg,var(--green),var(--green2));
+}
+.sid-label{font-size:9px;color:var(--muted);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;display:block}
+.sid-value{
+  font-family:var(--font-display);
+  font-size:clamp(11px,3vw,14px);
+  font-weight:700;
+  letter-spacing:2px;
+  word-break:break-all;
+  line-height:1.4;
+}
+.sid-prefix{color:#fff;text-shadow:0 0 10px #fff}
+.sid-sep{color:var(--green2);margin:0 1px}
+.sid-val{
+  color:var(--green);
+  text-shadow:0 0 12px var(--green);
+  animation:codeFlicker 4s infinite;
+}
+
+/* ── CREDS AREA ── */
+.creds-label{font-size:9px;color:var(--muted);letter-spacing:3px;text-transform:uppercase;margin-bottom:6px;display:block}
+.creds-area{
+  width:100%;background:rgba(0,0,0,0.5);border:1px solid var(--border);
+  border-radius:2px;padding:11px;color:var(--green2);font-family:var(--font-mono);
+  font-size:10px;height:110px;resize:none;outline:none;letter-spacing:0.3px;line-height:1.6;
+}
+.copy-btn{
+  width:100%;margin-top:8px;padding:10px;
+  background:rgba(0,255,136,0.04);border:1px solid var(--green-dim);
+  color:var(--green2);font-family:var(--font-mono);font-size:10px;
+  letter-spacing:2px;cursor:pointer;border-radius:2px;transition:all 0.2s;
+}
+.copy-btn:hover{border-color:var(--green);color:var(--green);background:rgba(0,255,136,0.08)}
+
+/* ── INFO CARDS ── */
+.cards-section{margin-top:18px}
+.cards-heading{
+  font-size:9px;letter-spacing:4px;color:var(--muted);
+  text-transform:uppercase;margin-bottom:12px;
+  display:flex;align-items:center;gap:8px;
+}
+.cards-heading::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent)}
+
+.cards-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+.info-card{
+  border:1px solid var(--green-dim);border-radius:2px;
+  background:rgba(0,255,136,0.02);
+  padding:14px 12px;
+  position:relative;overflow:hidden;
+  transition:border-color 0.2s,box-shadow 0.2s;
+}
+.info-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--green-dim),transparent);
+}
+.info-card:hover{border-color:rgba(0,255,136,0.3);box-shadow:0 0 16px rgba(0,255,136,0.06)}
+
+.card-icon{font-size:18px;display:block;margin-bottom:8px;filter:drop-shadow(0 0 6px var(--green))}
+.card-title{
+  font-size:8px;letter-spacing:3px;color:var(--green2);
+  text-transform:uppercase;margin-bottom:10px;
+}
+.card-body{display:flex;flex-direction:column;gap:6px}
+
+/* Empty placeholder rows */
+.card-row{display:flex;align-items:center;gap:6px}
+.card-dot{
+  width:5px;height:5px;border-radius:50%;
+  background:var(--green-dim);border:1px solid var(--green-dim);flex-shrink:0;
+}
+.card-line{
+  height:1px;flex:1;border-radius:1px;
+  background:linear-gradient(90deg,var(--green-dim),transparent);
+}
+.card-line.short{max-width:60%}
+.card-line.medium{max-width:80%}
+
+/* ── LOADING DOTS ── */
+.loading{display:inline-flex;gap:3px;margin-left:5px}
+.loading span{width:4px;height:4px;border-radius:50%;background:var(--green);animation:dotB 1.2s infinite}
+.loading span:nth-child(2){animation-delay:.2s}
+.loading span:nth-child(3){animation-delay:.4s}
+@keyframes dotB{0%,80%,100%{opacity:0.2}40%{opacity:1}}
+
+/* ── FOOTER ── */
+.footer{margin-top:20px;text-align:center;font-size:8px;color:var(--muted);letter-spacing:2px}
+
+@media(max-width:420px){
+  .cards-grid{grid-template-columns:1fr}
+  .pair-code{font-size:20px;letter-spacing:3px}
+  .sid-value{font-size:10px}
+}
+</style>
 </head>
 <body>
-  <!-- Advanced Particle Background -->
-  <div id="particles-js"></div>
-  <div class="cyber-grid"></div>
+<canvas id="matrix-canvas"></canvas>
 
-  <!-- Enhanced News Ticker -->
-  <div class="news-container">
-    <div class="title">🚀 SURYA-X Ultra Pro Max</div>
-    <div class="ticker">
-      <ul>
-        <li>Welcome to the Ultimate Session Experience!</li>
-        <li>Get your QR Codes & Pairing Codes Instantly</li>
-        <li>DSF CREW DEVS - Premium Quality</li>
-        <li>Advanced Security & Lightning Fast Performance</li>
-      </ul>
-    </div>
+<div class="wrapper">
+
+  <!-- LOGO -->
+  <div class="header">
+    <span class="surya-logo">SURYA<span class="surya-x">-X</span></span>
+    <div class="logo-tagline">// WhatsApp Session Linker //</div>
+    <div class="logo-bar"></div>
   </div>
 
-  <div class="container">
-    <!-- 3D Profile Section -->
-    <div class="profile-section">
-      <div class="profile-container">
-        <div class="profile-border"></div>
-        <img src="https://files.catbox.moe/jbrn0i.jpg" alt="SURYA-X" class="profile-image">
+  <!-- TERMINAL -->
+  <div class="terminal">
+    <div class="term-bar">
+      <div class="term-dot dot-r"></div>
+      <div class="term-dot dot-y"></div>
+      <div class="term-dot dot-g"></div>
+      <div class="term-title">root@surya-x ~ session-link</div>
+    </div>
+    <div class="term-body">
+
+      <!-- STATUS -->
+      <div class="status-log">
+        <div class="status-dot" id="status-dot"></div>
+        <span class="status-text" id="status-text">System idle. Select auth method to begin.</span>
       </div>
-    </div>
 
-    <!-- Hero Section -->
-    <div class="hero">
-      <h1>ULTRA PRO MAX SESSIONS</h1>
-      <p>Experience the next generation of WhatsApp bot sessions. Get your QR or pair code, deploy SURYA-X with advanced features, and join the elite tech community!</p>
-    </div>
-
-    <!-- Features Section -->
-    <div class="features">
-      <div class="feature-card">
-        <h3><i class="fas fa-qrcode"></i> QR Code Pairing</h3>
-        <p>Advanced QR code system with instant scanning and secure session ID generation. Lightning fast connection with enhanced security protocols.</p>
-        <button onclick="window.location.href='/qr'" class="btn">Get Premium QR</button>
+      <!-- MODE -->
+      <div class="mode-toggle">
+        <button class="mode-btn active" id="btn-pair" onclick="selectMode('pair')">
+          <span class="icon">🔗</span>PAIR CODE
+        </button>
+        <button class="mode-btn" id="btn-qr" onclick="selectMode('qr')">
+          <span class="icon">▦</span>QR CODE
+        </button>
       </div>
-      <div class="feature-card">
-        <h3><i class="fas fa-key"></i> Pair Code System</h3>
-        <p>Enter your number and receive an encrypted pairing code. No scanning required. Advanced encryption ensures maximum security.</p>
-        <button onclick="window.location.href='/pair'" class="btn">Generate Code</button>
+
+      <!-- ══ PAIR PANEL ══ -->
+      <div class="panel active" id="panel-pair">
+        <div class="input-group">
+          <span class="input-label">&gt; target phone number</span>
+          <div class="input-wrap has-prefix">
+            <span class="input-prefix">+</span>
+            <input type="tel" id="phone-input" placeholder="917797XXXXXXXXX" maxlength="15"
+              oninput="this.value=this.value.replace(/\D/g,'')"/>
+          </div>
+        </div>
+        <button class="exec-btn" id="pair-btn" onclick="startPair()">⚡ EXECUTE PAIR LINK</button>
+
+        <!-- Pair Code -->
+        <div class="pair-code-box" id="pair-code-box">
+          <div class="pair-label">// pair code generated //</div>
+          <div class="pair-code" id="pair-code-value">----</div>
+          <div class="pair-hint">
+            WhatsApp → ⋮ → Linked Devices<br/>
+            → Link a Device → Link with phone number<br/>
+            → Enter the code above
+          </div>
+        </div>
+
+        <!-- Session Output (pair) -->
+        <div class="session-output" id="pair-session">
+
+          <!-- SESSION ID -->
+          <div class="sid-wrap">
+            <span class="sid-label">&gt; session id acquired</span>
+            <div class="sid-value" id="pair-sid">—</div>
+          </div>
+
+          <!-- CREDS -->
+          <span class="creds-label">&gt; credentials dump</span>
+          <textarea class="creds-area" id="pair-creds" readonly></textarea>
+          <button class="copy-btn" onclick="copyCreds('pair-creds')">[ COPY CREDENTIALS ]</button>
+
+          <!-- INFO CARDS -->
+          <div class="cards-section">
+            <div class="cards-heading">&gt; bot configuration</div>
+            <div class="cards-grid">
+
+              <div class="info-card">
+                <span class="card-icon">👤</span>
+                <div class="card-title">// owner //</div>
+                <div class="card-body">
+                  <div class="card-row"><span class="card-dot"></span><div class="card-line medium"></div></div>
+                  <div class="card-row"><span class="card-dot"></span><div class="card-line short"></div></div>
+                  <div class="card-row"><span class="card-dot"></span><div class="card-line"></div></div>
+                </div>
+              </div>
+
+              <div class="info-card">
+                <span class="card-icon">👥</span>
+                <div class="card-title">// wa group //</div>
+                <div class="card-body">
+                  <div class="card-row"><span class="card-dot"></span><div class="card-line"></div></div>
+                  <div class="card-row"><span class="card-dot"></span><div class="card-line medium"></div></div>
+                  <div class="card-row"><span class="card-dot"></span><div class="card-line short"></div></div>
+                </div>
+              </div>
+
+              <div class="info-card">
+                <span class="card-icon">📢</span>
+                <div class="card-title">// wa channel //</div>
+                <div class="card-body">
+                  <div class="card-row"><span class="card-dot"></span><div class="card-line short"></div></div>
+                  <div class="card-row"><span class="card-dot"></span><div class="card-line"></div></div>
+                  <div class="card-row"><span class="card-dot"></span><div class="card-line medium"></div></div>
+                </div>
+              </div>
+
+              <div class="info-card">
+                <span class="card-icon">🤖</span>
+                <div class="card-title">// bot status //</div>
+                <div class="card-body">
+                  <div class="card-row"><span class="card-dot"></span><div class="card-line medium"></div></div>
+                  <div class="card-row"><span class="card-dot"></span><div class="card-line"></div></div>
+                  <div class="card-row"><span class="card-dot"></span><div class="card-line short"></div></div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <!-- /INFO CARDS -->
+
+        </div>
       </div>
-      <div class="feature-card">
-        <h3><i class="fas fa-rocket"></i> Deploy SURYA-X</h3>
-        <p>One-click deployment with advanced features. Get your own bot running in minutes with premium functionality and 24/7 support.</p>
-        <button onclick="window.location.href='https://github.com/darsurya345/SURYA-X'" class="btn">Deploy Now</button>
+
+      <!-- ══ QR PANEL ══ -->
+      <div class="panel" id="panel-qr">
+        <button class="exec-btn" id="qr-btn" onclick="startQR()">▦ GENERATE QR MATRIX</button>
+
+        <!-- QR Image -->
+        <div class="qr-box" id="qr-box">
+          <div class="pair-label">// scan with whatsapp //</div>
+          <img id="qr-img" src="" alt="QR"/>
+          <div class="pair-hint">
+            WhatsApp → ⋮ → Linked Devices<br/>
+            → Link a Device → Scan QR code
+          </div>
+        </div>
+
+        <!-- Session Output (qr) -->
+        <div class="session-output" id="qr-session">
+
+          <!-- SESSION ID -->
+          <div class="sid-wrap">
+            <span class="sid-label">&gt; session id acquired</span>
+            <div class="sid-value" id="qr-sid">—</div>
+          </div>
+
+          <!-- CREDS -->
+          <span class="creds-label">&gt; credentials dump</span>
+          <textarea class="creds-area" id="qr-creds" readonly></textarea>
+          <button class="copy-btn" onclick="copyCreds('qr-creds')">[ COPY CREDENTIALS ]</button>
+
+          <!-- INFO CARDS -->
+          <div class="cards-section">
+            <div class="cards-heading">&gt; bot configuration</div>
+            <div class="cards-grid">
+
+              <div class="info-card">
+                <span class="card-icon">👤</span>
+                <div class="card-title">// owner //</div>
+                <div class="card-body">
+                  <div class="card-row"><span class="card-dot"></span><div class="card-line medium"></div></div>
+                  <div class="card-row"><span class="card-dot"></span><div class="card-line short"></div></div>
+                  <div class="card-row"><span class="card-dot"></span><div class="card-line"></div></div>
+                </div>
+              </div>
+
+              <div class="info-card">
+                <span class="card-icon">👥</span>
+                <div class="card-title">// wa group //</div>
+                <div class="card-body">
+                  <div class="card-row"><span class="card-dot"></span><div class="card-line"></div></div>
+                  <div class="card-row"><span class="card-dot"></span><div class="card-line medium"></div></div>
+                  <div class="card-row"><span class="card-dot"></span><div class="card-line short"></div></div>
+                </div>
+              </div>
+
+              <div class="info-card">
+                <span class="card-icon">📢</span>
+                <div class="card-title">// wa channel //</div>
+                <div class="card-body">
+                  <div class="card-row"><span class="card-dot"></span><div class="card-line short"></div></div>
+                  <div class="card-row"><span class="card-dot"></span><div class="card-line"></div></div>
+                  <div class="card-row"><span class="card-dot"></span><div class="card-line medium"></div></div>
+                </div>
+              </div>
+
+              <div class="info-card">
+                <span class="card-icon">🤖</span>
+                <div class="card-title">// bot status //</div>
+                <div class="card-body">
+                  <div class="card-row"><span class="card-dot"></span><div class="card-line medium"></div></div>
+                  <div class="card-row"><span class="card-dot"></span><div class="card-line"></div></div>
+                  <div class="card-row"><span class="card-dot"></span><div class="card-line short"></div></div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <!-- /INFO CARDS -->
+
+        </div>
       </div>
-    </div>
 
-    <!-- About Section -->
-    <div class="about">
-      <h2>About Ultra Pro Max</h2>
-      <p>We're revolutionizing the WhatsApp bot experience with cutting-edge technology. Our Ultra Pro Max version delivers unprecedented performance, security, and features. Join thousands of satisfied users who have upgraded to the premium SURYA-X experience.</p>
-    </div>
+    </div><!-- /term-body -->
+  </div><!-- /terminal -->
 
-    <!-- Contact Section -->
-    <div class="contact">
-      <h2>Elite Support</h2>
-      <p>Our premium support team is available 24/7 to assist you with any issues. Contact us via SMS, WhatsApp, or Telegram for instant assistance with deployment, troubleshooting, or custom requests.</p>
-    </div>
-  </div>
-
-  <!-- Footer -->
   <div class="footer">
-    <p>© 2026 DARK SURYA | Ultra Pro Max Edition</p>
-    <p>Contact <b>SURYAX Official</b> for Premium Support</p>
-    <div class="social-links">
-      <a href="https://youtube.com/" target="_blank"><i class="fab fa-youtube"></i></a>
-      <a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
-      <a href="https://t.me/DARKSURYA_345" target="_blank"><i class="fab fa-telegram"></i></a>
-      <a href="https://whatsapp.com/channel/0029Vb64JNKJf05UHKREBM1h" target="_blank"><i class="fab fa-whatsapp"></i></a>
-    </div>
+    &gt; surya-x &bull; authorized use only &bull; session encrypted &bull; v2.1.0
   </div>
+</div>
 
-  <!-- Particle.js -->
-  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-  <script>
-    // Advanced particle configuration
-    particlesJS('particles-js', {
-      particles: {
-        number: { value: 120, density: { enable: true, value_area: 800 } },
-        color: { value: ["#00ffcc", "#ff2e63", "#7209b7", "#4361ee"] },
-        shape: { 
-          type: ["circle", "triangle", "polygon"],
-          polygon: { nb_sides: 6 }
-        },
-        opacity: { 
-          value: 0.7, 
-          random: true,
-          anim: { enable: true, speed: 1, opacity_min: 0.2, sync: false }
-        },
-        size: { 
-          value: 3, 
-          random: true,
-          anim: { enable: true, speed: 4, size_min: 0.3, sync: false }
-        },
-        line_linked: {
-          enable: true,
-          distance: 150,
-          color: "#00ffcc",
-          opacity: 0.4,
-          width: 1.5
-        },
-        move: {
-          enable: true,
-          speed: 2,
-          direction: "none",
-          random: true,
-          straight: false,
-          out_mode: "out",
-          bounce: false,
-          attract: { enable: true, rotateX: 600, rotateY: 1200 }
-        }
-      },
-      interactivity: {
-        detect_on: "canvas",
-        events: {
-          onhover: { enable: true, mode: "repulse" },
-          onclick: { enable: true, mode: "push" },
-          resize: true
-        },
-        modes: {
-          repulse: { distance: 100, duration: 0.4 },
-          push: { particles_nb: 4 }
-        }
-      },
-      retina_detect: true
-    });
+<script>
+// ── MATRIX RAIN ──────────────────────────────────────────────────
+const canvas = document.getElementById('matrix-canvas');
+const ctx = canvas.getContext('2d');
+function resizeCanvas(){canvas.width=window.innerWidth;canvas.height=window.innerHeight}
+resizeCanvas();
+window.addEventListener('resize',resizeCanvas);
+const cols=Math.floor(window.innerWidth/14);
+const drops=Array(cols).fill(1);
+const chars='アイウエオカキクケコサシスセソタチツテトABCDEF0123456789$#@%░▒▓'.split('');
+function drawMatrix(){
+  ctx.fillStyle='rgba(1,11,6,0.05)';ctx.fillRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle='#00ff88';ctx.font='13px Share Tech Mono';
+  drops.forEach((y,i)=>{
+    const ch=chars[Math.floor(Math.random()*chars.length)];
+    ctx.fillText(ch,i*14,y*14);
+    if(y*14>canvas.height&&Math.random()>0.975)drops[i]=0;
+    drops[i]++;
+  });
+}
+setInterval(drawMatrix,45);
 
-    // Add scroll animations
-    document.addEventListener('DOMContentLoaded', function() {
-      const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-      };
+// ── SESSION ID FORMAT: SURYA-X~XXXXXXXXXXXXXXXX ───────────────────
+function renderSID(elId, rawId) {
+  const el = document.getElementById(elId);
+  // rawId = "SID-ABCD-EFGH-IJKL-MNOP" → strip to "ABCDEFGHIJKLMNOP"
+  const stripped = rawId.replace('SID-','').replace(/-/g,'');
+  el.innerHTML =
+    `<span class="sid-prefix">SURYA-X</span>` +
+    `<span class="sid-sep">~</span>` +
+    `<span class="sid-val">${stripped}</span>`;
+}
 
-      const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-          }
-        });
-      }, observerOptions);
+// ── SOCKET.IO ────────────────────────────────────────────────────
+const socket = io();
+let currentMode = 'pair';
 
-      // Observe all feature cards and sections
-      document.querySelectorAll('.feature-card, .about, .contact, .hero').forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-        observer.observe(el);
-      });
-    });
-  </script>
+socket.on('status', ({msg, type}) => setStatus(msg, type));
+socket.on('error',  ({msg}) => setStatus('ERR: ' + msg, 'error'));
 
-  <!-- GetButton.io widget -->
-  <script type="text/javascript">
-    (function () {
-      var options = {
-        sms: "+917797099719",
-        sms_color: "#129BF4",
-        whatsapp: "+917797099719",
-        telegram: "https://t.me/DARKSURYA_345",
-        call_to_action: "Premium Support",
-        button_color: "#FF318E",
-        position: "left",
-        order: "sms,whatsapp,telegram",
-        pre_filled_message: "Hello DARK SURYA! I need assistance with the Ultra Pro Max version.",
-      };
-      var proto = 'https:', host = "getbutton.io", url = proto + '//static.' + host;
-      var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = url + '/widget-send-button/js/init.js';
-      s.onload = function () { WhWidgetSendButton.init(host, proto, options); };
-      var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x);
-    })();
-  </script>
+socket.on('pair:code', ({code}) => {
+  document.getElementById('pair-code-value').textContent = code;
+  document.getElementById('pair-code-box').classList.add('show');
+});
+
+socket.on('qr:image', ({dataUrl}) => {
+  document.getElementById('qr-img').src = dataUrl;
+  document.getElementById('qr-box').classList.add('show');
+});
+
+socket.on('session:ready', ({sessionId, creds}) => {
+  const prefix = currentMode === 'pair' ? 'pair' : 'qr';
+  renderSID(prefix + '-sid', sessionId);
+  document.getElementById(prefix + '-creds').value = creds;
+  document.getElementById(prefix + '-session').classList.add('show');
+  document.getElementById(prefix + '-btn').disabled = false;
+  setTimeout(() => {
+    document.getElementById(prefix + '-session').scrollIntoView({behavior:'smooth', block:'start'});
+  }, 200);
+});
+
+// ── STATUS ───────────────────────────────────────────────────────
+function setStatus(msg, type='info'){
+  document.getElementById('status-dot').className = 'status-dot ' + type;
+  document.getElementById('status-text').textContent = msg;
+}
+
+// ── MODE TOGGLE ──────────────────────────────────────────────────
+function selectMode(mode){
+  currentMode = mode;
+  document.querySelectorAll('.mode-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('btn-'+mode).classList.add('active');
+  document.getElementById('panel-'+mode).classList.add('active');
+  setStatus('Mode: ' + mode.toUpperCase() + ' selected.', 'info');
+}
+
+// ── START PAIR ───────────────────────────────────────────────────
+function startPair(){
+  const phone = document.getElementById('phone-input').value.trim();
+  if(!phone){ setStatus('Enter phone number first.', 'error'); return; }
+  const btn = document.getElementById('pair-btn');
+  btn.disabled = true;
+  btn.innerHTML = 'CONNECTING<span class="loading"><span></span><span></span><span></span></span>';
+  document.getElementById('pair-code-box').classList.remove('show');
+  document.getElementById('pair-session').classList.remove('show');
+  setStatus('Requesting pair code...', 'info');
+  socket.emit('start:pair', { phone });
+  setTimeout(()=>{ btn.innerHTML='⚡ EXECUTE PAIR LINK'; btn.disabled=false; }, 35000);
+}
+
+// ── START QR ─────────────────────────────────────────────────────
+function startQR(){
+  const btn = document.getElementById('qr-btn');
+  btn.disabled = true;
+  btn.innerHTML = 'GENERATING<span class="loading"><span></span><span></span><span></span></span>';
+  document.getElementById('qr-box').classList.remove('show');
+  document.getElementById('qr-session').classList.remove('show');
+  setStatus('Generating QR matrix...', 'info');
+  socket.emit('start:qr');
+  setTimeout(()=>{ btn.innerHTML='▦ GENERATE QR MATRIX'; btn.disabled=false; }, 35000);
+}
+
+// ── COPY CREDS ───────────────────────────────────────────────────
+function copyCreds(id){
+  navigator.clipboard.writeText(document.getElementById(id).value)
+    .then(()=>setStatus('Credentials copied to clipboard.', 'success'));
+}
+</script>
 </body>
 </html>
